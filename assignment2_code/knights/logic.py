@@ -258,3 +258,32 @@ def model_check(knowledge, query):
 
     # Check that knowledge entails query
     return check_all(knowledge, query, symbols, dict())
+
+class XOR(Sentence):
+    def __init__(self, first, second):
+        Sentence.validate(first)
+        Sentence.validate(second)
+        self.first = first
+        self.second = second
+
+    def __eq__(self, other):
+        return (isinstance(other, XOR)
+                and self.first == other.first
+                and self.second == other.second)
+
+    def __hash__(self):
+        return hash(("xor", hash(self.first), hash(self.second)))
+
+    def __repr__(self):
+        return f"XOR({self.first}, {self.second})"
+
+    def evaluate(self, model):
+        return ((self.first.evaluate(model) != self.second.evaluate(model)))
+
+    def formula(self):
+        first = Sentence.parenthesize(str(self.first))
+        second = Sentence.parenthesize(str(self.second))
+        return f"{first} XOR {second}"
+
+    def symbols(self):
+        return set.union(self.first.symbols(), self.second.symbols())

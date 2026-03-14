@@ -17,10 +17,14 @@ CKnave = Symbol("C is a Knave")
 # A says "I am both a knight and a knave."
 # ----------------------------------------
 ##   write the statement(s) in PL 
-stat = None
+stat = And(AKnight, AKnave)
 ##   Fill in the knowledge base
 knowledge1 = And(
     # TODO
+    Or(AKnight, AKnave), 
+    Not(And(AKnight, AKnave)),
+    Implication(AKnight, stat),
+    Implication(AKnave, Not(stat))  
 )
 # ----------------------------------------
 
@@ -29,10 +33,19 @@ knowledge1 = And(
 # B says "We are of different kinds."
 # ----------------------------------------
 ##   write the statement(s) in PL 
-stat = None
+statA = Or(And(AKnight, BKnight), And(AKnave, BKnave))
+statB = Or(And(AKnight, BKnave), And(AKnave, BKnight))
 ##   Fill in the knowledge base
 knowledge2 = And(
     # TODO
+    Or(AKnight, AKnave), 
+    Or(BKnight, BKnave),
+    Not(And(AKnight, AKnave)),
+    Not(And(BKnight, BKnave)),
+    Implication(AKnight, statA),
+    Implication(AKnave, Not(statA)),
+    Implication(BKnight, statB),
+    Implication(BKnave, Not(statB))
 )
 # ----------------------------------------
 
@@ -43,10 +56,25 @@ knowledge2 = And(
 # C says "A is a knight."
 # ----------------------------------------
 ##   write the statement(s) in PL 
-stat = None
+statA = Or(AKnight, AKnave)
+statB = AKnave
+statB2 = CKnave
+statC = AKnight
 ##   Fill in the knowledge base
 knowledge3 = And(
     # TODO
+    Or(AKnight, AKnave),
+    Not(And(AKnight, AKnave)),
+    Or(BKnight, BKnave),
+    Not(And(BKnight, BKnave)),
+    Or(CKnight, CKnave),
+    Not(And(CKnight, CKnave)),
+    Implication(AKnight, statA),
+    Implication(AKnave, Not(statA)),
+    Implication(BKnight, And(statB, statB2)),
+    Implication(BKnave, Not(And(statB, statB2))),
+    Implication(CKnight, statC),
+    Implication(CKnave, Not(statC))
 )
 # ----------------------------------------
 
