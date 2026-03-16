@@ -30,7 +30,38 @@ def ints() -> Tuple[List[Formula], Formula]:
     #
     # Hint: You might want to use the Equals predicate, defined in logic.py.  This
     # predicate is used to assert that two objects are the same.
-    formulas = []
+    formulas = [Forall('$x',
+               Exists('$y',
+                      And(Successor('$x', '$y'),
+                          And(Not(Equals('$x', '$y')),
+                              Forall('$z',
+                                     Implies(Successor('$x', '$z'),
+                                             Equals('$y', '$z'))))))),
+
+        Forall('$x',
+               Xor(Even('$x'), Odd('$x'))),
+
+        Forall('$x',
+               Forall('$y',
+                      Implies(And(Even('$x'), Successor('$x', '$y')),
+                              Odd('$y')))),
+
+        Forall('$x',
+               Forall('$y',
+                      Implies(And(Odd('$x'), Successor('$x', '$y')),
+                              Even('$y')))),
+
+        Forall('$x',
+               Forall('$y',
+                      Implies(Successor('$x', '$y'),
+                              Larger('$y', '$x')))),
+
+        Forall('$x',
+               Forall('$y',
+                      Forall('$z',
+                             Implies(And(Larger('$x', '$y'),
+                                         Larger('$y', '$z')),
+                                     Larger('$x', '$z')))))]
     # BEGIN_YOUR_CODE (our solution is 16 lines of code, but don't worry if you deviate from this)
     # TODO
     # END_YOUR_CODE
